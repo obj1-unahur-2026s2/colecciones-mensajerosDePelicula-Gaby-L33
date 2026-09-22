@@ -1,5 +1,6 @@
 import example.*
 import destinos.*
+import empresa.*
 
 describe "grupo de test de destinos y mensajeros" {
 
@@ -17,5 +18,47 @@ describe "grupo de test de destinos y mensajeros" {
   test "Chuck Norris siempre puede llevar un paquete a la matrix cuando esta pagado"{
     chuckNorris.pagarPaquete()
     assert.equals(true, laMatrix.dejarPasar(chuckNorris))
+  }
+}
+
+describe "grupo de test de la empresa"{
+  test "La empresa contrata al mensajero Chuck Norris"{
+    empresaDeMensajeria.contratarMensajero(chuckNorris)
+    assert.that(empresaDeMensajeria.mostrarMensajerosContratados().contains(chuckNorris))
+  }
+
+  test "Luego la empresa contrata dos empleados mas y se vuelve grande"{
+    empresaDeMensajeria.contratarMensajero(chuckNorris)
+    empresaDeMensajeria.contratarMensajero(roberto)
+    empresaDeMensajeria.contratarMensajero(neo)
+    assert.equals(true, empresaDeMensajeria.mensajeriaEsGrande())
+  }
+
+  test "Y se fijan si el primero puede entregar el paquete pagado pero no tiene el pago"{
+    empresaDeMensajeria.contratarMensajero(chuckNorris)
+    empresaDeMensajeria.contratarMensajero(roberto)
+    empresaDeMensajeria.contratarMensajero(neo)
+    assert.equals(false, empresaDeMensajeria.elPrimeroPuedeEntregarElPaquete())
+  }
+
+  test "Asi que despiden a Chuck Norris"{
+    empresaDeMensajeria.contratarMensajero(chuckNorris)
+    empresaDeMensajeria.contratarMensajero(roberto)
+    empresaDeMensajeria.contratarMensajero(neo)
+    empresaDeMensajeria.despedirMensajero(chuckNorris)
+    assert.notThat(empresaDeMensajeria.mostrarMensajerosContratados().contains(chuckNorris))
+  }
+
+  test "Luego verifican el peso del ultimo mensajero contratado"{
+    empresaDeMensajeria.contratarMensajero(roberto)
+    empresaDeMensajeria.contratarMensajero(neo)
+    assert.equals(0, empresaDeMensajeria.pesoDelUltimoMensajero())
+  }
+
+  test "Pero como nadie puede hacer bien el trabajo los despiden a todos"{
+    empresaDeMensajeria.contratarMensajero(roberto)
+    empresaDeMensajeria.contratarMensajero(neo)
+    empresaDeMensajeria.despedirTodosLosMensajeros()
+    assert.that(empresaDeMensajeria.mostrarMensajerosContratados().isEmpty())
   }
 }
