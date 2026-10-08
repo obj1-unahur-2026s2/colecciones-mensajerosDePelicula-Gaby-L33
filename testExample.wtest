@@ -7,17 +7,17 @@ describe "grupo de test de destinos y mensajeros" {
   test "Roberto puede llevar un paquete que está pago en un camión que tiene un acoplado." {
     roberto.cambiarAUnCamion()
     roberto.pagarPaquete()
-    assert.equals(true, puenteDeBroklyn.dejarPasar(roberto))
+    assert.that(roberto.llevarPaquete(puenteDeBroklyn))
   }
 
   test "neo con crédito no puede llevar un paquete que no está pago a la matrix."{
     neo.agregarCredito()
-    assert.equals(false, laMatrix.dejarPasar(neo))
+    assert.notThat(neo.llevarPaquete(laMatrix))
   }
 
   test "Chuck Norris siempre puede llevar un paquete a la matrix cuando esta pagado"{
     chuckNorris.pagarPaquete()
-    assert.equals(true, laMatrix.dejarPasar(chuckNorris))
+    assert.that(chuckNorris.llevarPaquete(laMatrix))
   }
 }
 
@@ -31,14 +31,14 @@ describe "grupo de test de la empresa"{
     empresaDeMensajeria.contratarMensajero(chuckNorris)
     empresaDeMensajeria.contratarMensajero(roberto)
     empresaDeMensajeria.contratarMensajero(neo)
-    assert.equals(true, empresaDeMensajeria.mensajeriaEsGrande())
+    assert.that(empresaDeMensajeria.mensajeriaEsGrande())
   }
 
   test "Y se fijan si el primero puede entregar el paquete pagado pero no tiene el pago"{
     empresaDeMensajeria.contratarMensajero(chuckNorris)
     empresaDeMensajeria.contratarMensajero(roberto)
     empresaDeMensajeria.contratarMensajero(neo)
-    assert.equals(false, empresaDeMensajeria.elPrimeroPuedeEntregarElPaquete())
+    assert.notThat(empresaDeMensajeria.elPrimeroPuedeEntregarElPaquete(laMatrix))
   }
 
   test "Asi que despiden a Chuck Norris"{
@@ -55,7 +55,7 @@ describe "grupo de test de la empresa"{
     assert.equals(0, empresaDeMensajeria.pesoDelUltimoMensajero())
   }
 
-  test "Pero como nadie puede hacer bien el trabajo los despiden a todos"{
+  test "Pero luego los despiden a todos"{
     empresaDeMensajeria.contratarMensajero(roberto)
     empresaDeMensajeria.contratarMensajero(neo)
     empresaDeMensajeria.despedirTodosLosMensajeros()

@@ -1,3 +1,6 @@
+import destinos.*
+import empresa.*
+
 /*
 Roberto: Roberto viaja en bicicleta o camión. Si viaja en bicicleta, 
 el peso que cuenta es el suyo propio más 5, que es lo que pesa la bici. 
@@ -6,33 +9,43 @@ media tonelada por cada acoplado. Roberto no tiene un mango, gracias
 que tiene cubiertas, y no puede llamar a nadie.
 */
 object roberto{
-  var vehiculo = "bicicleta"
-  var pesoDelVehiculo = 5
-  var cantidadDeAcoplados = 1
-  var estadoActualPaquete = false
-
-  method paquetePagado() = estadoActualPaquete
+  var vehiculo = bicicleta
+  var paquetePagado = false
 
   method puedeLlamar() = false
 
-  method peso() = 90 + pesoDelVehiculo
+  method peso() = 90 + vehiculo.peso()
 
   method cambiarAUnabicicleta(){
-      vehiculo = "bicicleta"
-      pesoDelVehiculo = 5
+      vehiculo = bicicleta
   }
 
   method cambiarAUnCamion(){
-    vehiculo = "camion"
-    pesoDelVehiculo = 500 * cantidadDeAcoplados
+    vehiculo = camion
   }
 
   method cambiarCantidadDeAcoplados(nuevaCantidad){
-      cantidadDeAcoplados = 1.max(nuevaCantidad)
+      camion.cambiarCantidadDeAcoplados(nuevaCantidad)
   }
 
   method pagarPaquete(){
-    estadoActualPaquete = true
+    paquetePagado = true
+  }
+
+  method llevarPaquete(destino) = paquetePagado && destino.dejarPasar(self)      
+}
+
+object bicicleta{
+  method peso() = 5
+}
+
+object camion {
+  var cantidadDeAcoplados = 1 
+  
+  method peso() = 500 * cantidadDeAcoplados
+
+  method cambiarCantidadDeAcoplados(nuevaCantidad){
+    cantidadDeAcoplados = nuevaCantidad
   }
 }
 
@@ -41,16 +54,16 @@ Chuck Norris: Chuck Norris pesa 80 kg y puede llamar a cualquier
 persona del universo con sólo llevarse el pulgar al oído y el meñique a la boca.
 */
 object chuckNorris{
-  var estadoActualPaquete = false
-
-  method paquetePagado() = estadoActualPaquete
+  var paquetePagado = false
 
   method peso() = 80
   method puedeLlamar() = true 
 
   method pagarPaquete(){
-    estadoActualPaquete = true
+    paquetePagado = true
   }
+
+  method llevarPaquete(destino)= paquetePagado && destino.dejarPasar(self)    
 }
 /*
 Neo vuela, así que no pesa nada. Y anda con celular. 
@@ -58,9 +71,7 @@ El tema es que a veces no tiene crédito para hacer llamadas.
 */
 object neo{
   var tieneCredito = true
-  var estadoActualPaquete = false
-
-  method paquetePagado() = estadoActualPaquete
+  var paquetePagado = false
 
   method peso() = 0
 
@@ -75,6 +86,8 @@ object neo{
   }
 
   method pagarPaquete(){
-    estadoActualPaquete = true
+    paquetePagado = true
   }
+
+  method llevarPaquete(destino) = paquetePagado && destino.dejarPasar(self)    
 }
