@@ -10,7 +10,6 @@ que tiene cubiertas, y no puede llamar a nadie.
 */
 object roberto{
   var vehiculo = bicicleta
-  var paquetePagado = false
 
   method puedeLlamar() = false
 
@@ -28,11 +27,7 @@ object roberto{
       camion.cambiarCantidadDeAcoplados(nuevaCantidad)
   }
 
-  method pagarPaquete(){
-    paquetePagado = true
-  }
-
-  method llevarPaquete(destino) = paquetePagado && destino.dejarPasar(self)      
+  method llevarPaquete(tipoDePaquete, destino) = tipoDePaquete.paquetePagado() && destino.dejarPasar(self)      
 }
 
 object bicicleta{
@@ -54,16 +49,12 @@ Chuck Norris: Chuck Norris pesa 80 kg y puede llamar a cualquier
 persona del universo con sólo llevarse el pulgar al oído y el meñique a la boca.
 */
 object chuckNorris{
-  var paquetePagado = false
 
   method peso() = 80
   method puedeLlamar() = true 
 
-  method pagarPaquete(){
-    paquetePagado = true
-  }
 
-  method llevarPaquete(destino)= paquetePagado && destino.dejarPasar(self)    
+  method llevarPaquete(tipoDePaquete, destino) = tipoDePaquete.paquetePagado() && destino.dejarPasar(self)   
 }
 /*
 Neo vuela, así que no pesa nada. Y anda con celular. 
@@ -71,7 +62,6 @@ El tema es que a veces no tiene crédito para hacer llamadas.
 */
 object neo{
   var tieneCredito = true
-  var paquetePagado = false
 
   method peso() = 0
 
@@ -85,9 +75,5 @@ object neo{
     tieneCredito = false
   }
 
-  method pagarPaquete(){
-    paquetePagado = true
-  }
-
-  method llevarPaquete(destino) = paquetePagado && destino.dejarPasar(self)    
+  method llevarPaquete(tipoDePaquete, destino) = tipoDePaquete.paquetePagado() && destino.dejarPasar(self)   
 }
